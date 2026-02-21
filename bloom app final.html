@@ -1,0 +1,4191 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="pink">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom — Your Soft Productivity Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       THEME TOKENS
+       We define all colour-related values as CSS custom properties
+       on [data-theme]. Swapping one attribute changes everything.
+    ============================================================ */
+
+    [data-theme="pink"] {
+      --bg:           #fff4f7;
+      --bg-alt:       #ffe8ef;
+      --surface:      #ffffff;
+      --surface-2:    #fff0f4;
+      --accent:       #f4739a;
+      --accent-light: #fca5c0;
+      --accent-dark:  #d94d7a;
+      --accent-faint: #fde8ef;
+      --text:         #3d1f2b;
+      --text-muted:   #9c6b7e;
+      --border:       #f8ccd9;
+      --shadow:       rgba(244, 115, 154, 0.14);
+      --gradient:     linear-gradient(135deg, #ffd6e4 0%, #ffb3cc 100%);
+      --icon-color:   #f4739a;
+    }
+
+    [data-theme="lavender"] {
+      --bg:           #f5f3ff;
+      --bg-alt:       #ede9fe;
+      --surface:      #ffffff;
+      --surface-2:    #f2f0ff;
+      --accent:       #8b5cf6;
+      --accent-light: #a78bfa;
+      --accent-dark:  #6d28d9;
+      --accent-faint: #ede9fe;
+      --text:         #2d1b69;
+      --text-muted:   #7c6b9e;
+      --border:       #d8d3f5;
+      --shadow:       rgba(139, 92, 246, 0.14);
+      --gradient:     linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+      --icon-color:   #8b5cf6;
+    }
+
+    [data-theme="peach"] {
+      --bg:           #fff8f4;
+      --bg-alt:       #ffe9d9;
+      --surface:      #ffffff;
+      --surface-2:    #fff3ec;
+      --accent:       #f97845;
+      --accent-light: #fb9d75;
+      --accent-dark:  #dd5a22;
+      --accent-faint: #fdeee6;
+      --text:         #3d1f0d;
+      --text-muted:   #9c6b4e;
+      --border:       #f8d5bf;
+      --shadow:       rgba(249, 120, 69, 0.14);
+      --gradient:     linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+      --icon-color:   #f97845;
+    }
+
+    [data-theme="dark-pink"] {
+      --bg:           #1a0a11;
+      --bg-alt:       #2b1020;
+      --surface:      #241018;
+      --surface-2:    #2f1522;
+      --accent:       #f4739a;
+      --accent-light: #fca5c0;
+      --accent-dark:  #d94d7a;
+      --accent-faint: #3d1428;
+      --text:         #fce7ef;
+      --text-muted:   #c07090;
+      --border:       #4a1f32;
+      --shadow:       rgba(244, 115, 154, 0.22);
+      --gradient:     linear-gradient(135deg, #6b1e3d 0%, #4a0f2a 100%);
+      --icon-color:   #f4739a;
+    }
+
+    /* ── Midnight Rose — deep navy with rose gold accents ── */
+    [data-theme="midnight-rose"] {
+      --bg:           #0e0d18;
+      --bg-alt:       #18162a;
+      --surface:      #141221;
+      --surface-2:    #1c1930;
+      --accent:       #e8a0bf;
+      --accent-light: #f2c4d8;
+      --accent-dark:  #c97aa0;
+      --accent-faint: #2a1828;
+      --text:         #f0e8f4;
+      --text-muted:   #9c87b0;
+      --border:       #2e2545;
+      --shadow:       rgba(232, 160, 191, 0.18);
+      --gradient:     linear-gradient(135deg, #2e1a3a 0%, #1a1030 100%);
+      --icon-color:   #e8a0bf;
+    }
+
+    /* ── Plum Noir — rich dark plum, velvety and mysterious ── */
+    [data-theme="plum-noir"] {
+      --bg:           #120b1a;
+      --bg-alt:       #1e1128;
+      --surface:      #190e22;
+      --surface-2:    #22142e;
+      --accent:       #c084fc;
+      --accent-light: #d8a8fd;
+      --accent-dark:  #a855f7;
+      --accent-faint: #2d1545;
+      --text:         #ede8f5;
+      --text-muted:   #9a85b8;
+      --border:       #3a2050;
+      --shadow:       rgba(192, 132, 252, 0.20);
+      --gradient:     linear-gradient(135deg, #3b1f5e 0%, #1e0f38 100%);
+      --icon-color:   #c084fc;
+    }
+
+    /* ── Forest Dusk — dark green-grey, earthy and calm ── */
+    [data-theme="forest-dusk"] {
+      --bg:           #0b1210;
+      --bg-alt:       #131f1a;
+      --surface:      #101a15;
+      --surface-2:    #18241e;
+      --accent:       #86efac;
+      --accent-light: #bbf7d0;
+      --accent-dark:  #4ade80;
+      --accent-faint: #142a1e;
+      --text:         #e8f5ee;
+      --text-muted:   #7aaa8f;
+      --border:       #1f3a2a;
+      --shadow:       rgba(134, 239, 172, 0.16);
+      --gradient:     linear-gradient(135deg, #14532d 0%, #0b2a18 100%);
+      --icon-color:   #86efac;
+    }
+
+    /* ── Slate Mauve — muted blue-grey with dusty rose ── */
+    [data-theme="slate-mauve"] {
+      --bg:           #0f1118;
+      --bg-alt:       #181c28;
+      --surface:      #141720;
+      --surface-2:    #1c2030;
+      --accent:       #c4b5cc;
+      --accent-light: #ddd6e8;
+      --accent-dark:  #a897b4;
+      --accent-faint: #252038;
+      --text:         #eeeaf4;
+      --text-muted:   #8c879e;
+      --border:       #2a2840;
+      --shadow:       rgba(196, 181, 204, 0.16);
+      --gradient:     linear-gradient(135deg, #2d2545 0%, #181528 100%);
+      --icon-color:   #c4b5cc;
+    }
+
+    /* ── Noir Sage — near-black with muted sage green ── */
+    [data-theme="noir-sage"] {
+      --bg:           #0c100e;
+      --bg-alt:       #141c18;
+      --surface:      #111510;
+      --surface-2:    #181f1a;
+      --accent:       #a3b899;
+      --accent-light: #c2d4ba;
+      --accent-dark:  #7a9a6e;
+      --accent-faint: #1a2518;
+      --text:         #e8ede6;
+      --text-muted:   #7a9070;
+      --border:       #223020;
+      --shadow:       rgba(163, 184, 153, 0.16);
+      --gradient:     linear-gradient(135deg, #1a3020 0%, #0c180f 100%);
+      --icon-color:   #a3b899;
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15.5px;
+      line-height: 1.65;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* ============================================================
+       NOISE TEXTURE OVERLAY — adds depth to the background
+    ============================================================ */
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ============================================================
+       LAYOUT WRAPPER
+    ============================================================ */
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ============================================================
+       HEADER / NAV
+    ============================================================ */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .logo-text em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: var(--accent-faint);
+      color: var(--accent-dark);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 72px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      line-height: 1.18;
+      font-weight: 600;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-text h1 span {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-text p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 380px;
+      margin-bottom: 28px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 22px;
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.22s ease;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 6px 20px var(--shadow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px var(--shadow);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--accent-faint);
+      border-color: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    /* Hero illustration / stat block */
+    .hero-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .hero-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 4px 18px var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .hero-stat:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-stat:nth-child(1) { grid-column: span 2; }
+
+    .hero-stat .stat-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-stat .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .hero-stat .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .hero-stat.wide {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--gradient);
+    }
+
+    .hero-stat.wide .stat-number,
+    .hero-stat.wide .stat-label {
+      color: #fff;
+    }
+
+    .progress-ring {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .progress-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring circle {
+      fill: none;
+      stroke-width: 5;
+    }
+
+    .progress-ring .ring-bg {
+      stroke: rgba(255,255,255,0.3);
+    }
+
+    .progress-ring .ring-fill {
+      stroke: #fff;
+      stroke-dasharray: 163;
+      stroke-dashoffset: 50;
+      stroke-linecap: round;
+    }
+
+    .ring-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* ============================================================
+       SECTION TITLES
+    ============================================================ */
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .section-title span {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-link {
+      font-size: 0.82rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dashed var(--accent-light);
+      transition: color 0.2s;
+    }
+
+    .section-link:hover {
+      color: var(--accent-dark);
+    }
+
+    /* ============================================================
+       FEATURE CARDS GRID
+    ============================================================ */
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 64px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px 26px;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px var(--shadow);
+      border-color: var(--accent-light);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-faint);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      transition: background 0.25s;
+    }
+
+    .card:hover .card-icon {
+      background: var(--gradient);
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .card-preview {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* To-do preview items */
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 5px 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .todo-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent-light);
+      flex-shrink: 0;
+    }
+
+    .todo-dot.done {
+      background: var(--accent);
+      border-color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .todo-dot.done::after {
+      content: '✓';
+      font-size: 8px;
+      color: white;
+    }
+
+    .todo-text.done {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    /* Timer preview */
+    .timer-display {
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    .timer-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+
+    .timer-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .timer-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .timer-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .timer-dot.active {
+      background: var(--accent);
+    }
+
+    .timer-dot.done {
+      background: var(--accent-light);
+    }
+
+    .timer-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .timer-btn {
+      border: none;
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .timer-btn-primary {
+      padding: 9px 26px;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--shadow);
+    }
+
+    .timer-btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .timer-btn-secondary {
+      width: 36px;
+      height: 36px;
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1.5px solid var(--border);
+      font-size: 1.1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer-btn-secondary:hover {
+      border-color: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* Pulse ring on the time display when running */
+    @keyframes timerPulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.6; }
+    }
+
+    .timer-time.running {
+      animation: timerPulse 2s ease-in-out infinite;
+    }
+
+    /* Gentle flash when a session ends */
+    @keyframes timerDone {
+      0%, 100% { color: var(--accent); }
+      50%       { color: var(--accent-light); }
+    }
+
+    .timer-display.finished .timer-time {
+      animation: timerDone 0.5s ease-in-out 4;
+    }
+
+    /* Timer config selects */
+    .timer-config {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .timer-config-field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .timer-config-field span {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+    }
+
+    .timer-config-field select {
+      appearance: none;
+      background: var(--surface-2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.2s;
+      width: 68px;
+    }
+
+    .timer-config-field select:focus {
+      outline: none;
+      border-color: var(--accent-light);
+    }
+
+    .timer-config-field select:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Habit tracker preview */
+    /* ============================================================
+       HABIT TRACKER
+    ============================================================ */
+
+    .habit-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .habit-input {
+      flex: 1;
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .habit-input::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+    .habit-input:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-faint);
+    }
+
+    .habit-add-btn {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .habit-add-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.08);
+    }
+
+    .habit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 220px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .habit-list::-webkit-scrollbar { width: 4px; }
+    .habit-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* Each habit row */
+    .habit-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+
+    .habit-row:hover { background: var(--surface-2); }
+
+    /* Today's check circle */
+    .habit-check-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent-light);
+      background: transparent;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .habit-check-btn:hover { border-color: var(--accent); transform: scale(1.1); }
+
+    .habit-check-btn.checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Name + streak group */
+    .habit-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .habit-name {
+      font-size: 0.82rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 400;
+    }
+
+    /* Mini dot-strip — last 7 days visualised as streak dots */
+    .habit-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .habit-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .habit-dot.lit { background: var(--accent-light); }
+    .habit-dot.today { background: var(--accent); }
+
+    /* Streak badge */
+    .habit-streak {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .habit-streak.on-fire { color: var(--accent); font-weight: 500; }
+
+    /* Delete button */
+    .habit-delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0;
+      padding: 0 2px;
+      border-radius: 4px;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .habit-row:hover .habit-delete-btn { opacity: 1; }
+    .habit-delete-btn:hover { color: var(--accent-dark); }
+
+    .habit-empty {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 14px 0 6px;
+      opacity: 0.6;
+    }
+
+    @keyframes habitIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .habit-row { animation: habitIn 0.18s ease both; }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      margin-top: 8px;
+    }
+
+    .progress-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .progress-bar {
+      height: 7px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* ============================================================
+       DAILY PLANNER
+    ============================================================ */
+
+    .planner-mood-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .planner-section-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    /* Mood buttons */
+    .planner-moods {
+      display: flex;
+      gap: 4px;
+    }
+
+    .mood-btn {
+      width: 30px;
+      height: 30px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface-2);
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .mood-btn:hover {
+      border-color: var(--accent-light);
+      transform: scale(1.18) translateY(-2px);
+      background: var(--accent-faint);
+    }
+
+    .mood-btn.selected {
+      border-color: var(--accent);
+      background: var(--accent-faint);
+      box-shadow: 0 0 0 3px var(--accent-faint);
+      transform: scale(1.15);
+    }
+
+    /* Planner textareas */
+    .planner-field {
+      margin-bottom: 12px;
+    }
+
+    .planner-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+
+    .planner-textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    .planner-textarea:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-faint);
+    }
+
+    /* Auto-save indicator */
+    .planner-saved {
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-align: right;
+      min-height: 1em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .planner-saved.visible {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       THEME SWITCHER SECTION
+    ============================================================ */
+
+    .theme-section {
+      margin-bottom: 64px;
+    }
+
+    .theme-current-label {
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-style: italic;
+      opacity: 0;
+      transform: translateX(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .theme-current-label.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .theme-switcher {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .theme-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px 12px 14px;
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 2px 10px var(--shadow);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      position: relative;
+      transition: all 0.25s ease;
+      /* min-width keeps all buttons the same width */
+      min-width: 172px;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px var(--shadow);
+      border-color: var(--accent-light);
+    }
+
+    /* Active / selected state */
+    .theme-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-faint);
+      box-shadow: 0 4px 18px var(--shadow);
+    }
+
+    /* Swatch */
+    .theme-swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.12);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .theme-btn:hover .theme-swatch {
+      transform: rotate(20deg) scale(1.18);
+    }
+
+    .theme-btn.active .theme-swatch {
+      transform: scale(1.1);
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.08), 0 3px 10px var(--shadow);
+    }
+
+    /* Text group */
+    .theme-btn-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      flex: 1;
+      text-align: left;
+    }
+
+    .theme-btn-name {
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color 0.2s;
+    }
+
+    .theme-btn.active .theme-btn-name {
+      color: var(--accent-dark);
+    }
+
+    .theme-btn-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* Checkmark — hidden until active */
+    .theme-check {
+      font-size: 0.78rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: scale(0.5) rotate(-15deg);
+      transition: opacity 0.22s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      flex-shrink: 0;
+    }
+
+    .theme-btn.active .theme-check {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    /* Swatch colour definitions */
+    .swatch-pink        { background: linear-gradient(135deg, #ffd6e4, #f4739a); }
+    .swatch-lavender    { background: linear-gradient(135deg, #ddd6fe, #8b5cf6); }
+    .swatch-peach       { background: linear-gradient(135deg, #fed7aa, #f97845); }
+    .swatch-dark        { background: linear-gradient(135deg, #6b1e3d, #1a0a11); }
+    /* Renamed to be explicit */
+    .swatch-dark-pink   { background: linear-gradient(135deg, #6b1e3d, #1a0a11); }
+    .swatch-midnight-rose { background: linear-gradient(135deg, #2e1a3a, #e8a0bf 180%); }
+    .swatch-plum-noir   { background: linear-gradient(135deg, #3b1f5e, #c084fc 180%); }
+    .swatch-forest-dusk { background: linear-gradient(135deg, #14532d, #86efac 180%); }
+    .swatch-slate-mauve { background: linear-gradient(135deg, #2d2545, #c4b5cc 180%); }
+    .swatch-noir-sage   { background: linear-gradient(135deg, #1a3020, #a3b899 180%); }
+
+    /* Theme group label (Light / Dark separator) */
+    .theme-group-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    /* ── Card-embedded theme swatches (features grid) ── */
+    .card-theme-swatches {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .card-swatch-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .card-swatch-btn:hover {
+      border-color: var(--accent-light);
+      background: var(--accent-faint);
+      transform: translateY(-2px);
+    }
+
+    .card-swatch-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-faint);
+    }
+
+    .card-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card-swatch-btn:hover .card-swatch {
+      transform: scale(1.12) rotate(10deg);
+    }
+
+    .card-swatch-btn.active .card-swatch {
+      transform: scale(1.08);
+    }
+
+    .card-swatch-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .card-swatch-btn.active .card-swatch-label {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .card-swatch-check {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      font-size: 0.6rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card-swatch-btn.active .card-swatch-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Theme transition overlay — a brief soft flash on switch */
+    .theme-flash {
+      position: fixed;
+      inset: 0;
+      background: var(--accent-faint);
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0;
+      animation: themeFlash 0.4s ease forwards;
+    }
+
+    @keyframes themeFlash {
+      0%   { opacity: 0.18; }
+      100% { opacity: 0; }
+    }
+
+    /* ============================================================
+       QUOTE / INSPIRATION STRIP
+    ============================================================ */
+
+    .quote-strip {
+      background: var(--gradient);
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin-bottom: 64px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .quote-icon {
+      font-size: 2.8rem;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    .quote-body blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.55;
+    }
+
+    .quote-body cite {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      font-style: normal;
+      display: block;
+      margin-top: 6px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ============================================================
+       DASHBOARD PREVIEW STRIP
+    ============================================================ */
+
+    .dash-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 64px;
+    }
+
+    .dash-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 18px;
+      box-shadow: 0 3px 14px var(--shadow);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .dash-tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .dash-tile-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .dash-tile-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .dash-tile-key {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dash-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .dash-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .quote-strip {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ============================================================
+       TO-DO — INPUT + LIST
+    ============================================================ */
+
+    .todo-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .todo-input {
+      flex: 1;
+      padding: 8px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .todo-input::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+    .todo-input:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-faint);
+    }
+
+    .todo-add-btn {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .todo-add-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.08);
+    }
+
+    .todo-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-height: 220px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .todo-list::-webkit-scrollbar { width: 4px; }
+    .todo-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+
+    .todo-item:hover { background: var(--surface-2); }
+
+    .todo-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent-light);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .todo-dot:hover { border-color: var(--accent); }
+
+    .todo-dot.done {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .todo-dot.done::after {
+      content: '✓';
+      font-size: 9px;
+      color: #fff;
+    }
+
+    .todo-text {
+      flex: 1;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .todo-text.done {
+      text-decoration: line-through;
+      opacity: 0.45;
+    }
+
+    .todo-delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      opacity: 0;
+      padding: 0 2px;
+      line-height: 1;
+      border-radius: 4px;
+      transition: opacity 0.15s, color 0.15s;
+    }
+
+    .todo-item:hover .todo-delete-btn { opacity: 1; }
+    .todo-delete-btn:hover { color: var(--accent-dark); }
+
+    .todo-empty {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 14px 0 6px;
+      opacity: 0.6;
+    }
+
+    @keyframes taskIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .todo-item { animation: taskIn 0.18s ease both; }
+
+    /* ============================================================
+       ENTRANCE ANIMATIONS
+    ============================================================ */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-text  { animation: fadeUp 0.6s ease both; }
+    .hero-visual { animation: fadeUp 0.6s 0.12s ease both; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.2s ease both; }
+    .card:nth-child(3) { animation: fadeUp 0.5s 0.3s ease both; }
+    .card:nth-child(4) { animation: fadeUp 0.5s 0.15s ease both; }
+    .card:nth-child(5) { animation: fadeUp 0.5s 0.25s ease both; }
+    .card:nth-child(6) { animation: fadeUp 0.5s 0.35s ease both; }
+
+    /* ============================================================
+       MICRO-INTERACTIONS
+    ============================================================ */
+
+    /* 1 — Theme transition: extend to ALL themed properties so the
+          entire palette crossfades, not just bg and text color.    */
+    *, *::before, *::after {
+      transition-property:
+        background-color, border-color, color,
+        box-shadow, opacity, fill, stroke;
+      transition-duration: 0.35s;
+      transition-timing-function: ease;
+    }
+
+    /* Preserve existing motion-specific transitions (they use `all`
+       or explicit properties that need different durations).         */
+    .card, .btn, .timer-btn, .todo-add-btn, .habit-add-btn,
+    .theme-btn, .todo-dot, .habit-check-btn, .todo-delete-btn,
+    .habit-delete-btn, .progress-bar-fill, .card::before {
+      transition: all 0.22s ease;
+    }
+
+    /* 2 — Card icon: gentle bounce on card hover */
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      40%       { transform: translateY(-4px) scale(1.08); }
+      70%       { transform: translateY(-1px) scale(1.02); }
+    }
+
+    .card:hover .card-icon {
+      animation: iconBounce 0.5s ease both;
+      background: var(--gradient);
+    }
+
+    /* 3 — Button press: sink on active, float on hover */
+    .btn-primary:active,
+    .timer-btn-primary:active,
+    .todo-add-btn:active,
+    .habit-add-btn:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .btn-ghost:active,
+    .timer-btn-secondary:active {
+      transform: scale(0.95);
+    }
+
+    /* 4 — Task completion: strikethrough flourish on the text */
+    @keyframes strikeSlide {
+      from { text-decoration-color: transparent; opacity: 1; }
+      to   { text-decoration-color: var(--accent-light); opacity: 0.45; }
+    }
+
+    .todo-text.done {
+      animation: strikeSlide 0.3s ease forwards;
+    }
+
+    /* Checkmark pop when a to-do dot becomes done */
+    @keyframes dotPop {
+      0%   { transform: scale(0.6); }
+      60%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    .todo-dot.done {
+      animation: dotPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* 5 — Habit check pop (same spring feel as task dot) */
+    @keyframes checkPop {
+      0%   { transform: scale(0.5) rotate(-15deg); }
+      60%  { transform: scale(1.3) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .habit-check-btn.checked {
+      animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* 6 — Streak badge glow when a streak is on fire */
+    @keyframes streakGlow {
+      0%, 100% { text-shadow: none; }
+      50%       { text-shadow: 0 0 8px var(--accent-light); }
+    }
+
+    .habit-streak.on-fire {
+      animation: streakGlow 2s ease-in-out infinite;
+    }
+
+    /* 7 — Pomodoro & streak celebration: petal burst overlay.
+          A fixed <div id="bloom-burst"> will be spawned by JS,
+          containing petals that fly outward and fade.              */
+    .bloom-burst {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .bloom-petal {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 1;
+      will-change: transform, opacity;
+      animation: petalFly var(--dur) var(--ease) forwards;
+    }
+
+    @keyframes petalFly {
+      0% {
+        transform: translate(0, 0) scale(0.4) rotate(0deg);
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        transform:
+          translate(var(--tx), var(--ty))
+          scale(1)
+          rotate(var(--rot));
+        opacity: 0;
+      }
+    }
+
+    /* 8 — Nav link underline grow on hover */
+    nav a {
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 14px;
+      right: 14px;
+      height: 1.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+      border-radius: 2px;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* 9 — Nav underline grow on hover (theme swatch spin now lives in .theme-btn CSS above) */
+
+    /* 10 — Progress bar fill: smooth width animation is already set
+           on .progress-bar-fill (width 0.5s). Extend it slightly
+           and add a shimmer pass after the fill settles.           */
+    .progress-bar-fill {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,0.35) 50%,
+        transparent 100%
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { transform: translateX(-100%); }
+      60%, 100% { transform: translateX(200%); }
+    }
+
+    /* ============================================================
+       TYPOGRAPHY REFINEMENTS
+       Raise every sub-0.75rem size to at least 0.75rem.
+       Improve line-height on dense text blocks.
+       Headings and major sizes are untouched.
+    ============================================================ */
+
+    /* Section labels / uppercase caps */
+    .planner-section-label,
+    .timer-config-field span,
+    .habit-streak,
+    .slot-time {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* Theme button subtitle */
+    .theme-btn-sub {
+      font-size: 0.75rem;
+    }
+
+    /* Tiny label under card-swatch and ring */
+    .card-swatch-label,
+    .ring-label {
+      font-size: 0.75rem;
+    }
+
+    /* Card descriptions — slightly looser for readability */
+    .card-desc {
+      font-size: 0.875rem;
+      line-height: 1.7;
+    }
+
+    /* In-card small text: todo, habit, timer, planner */
+    .todo-text,
+    .todo-empty,
+    .habit-name,
+    .habit-empty,
+    .timer-label,
+    .timer-config-field select,
+    .planner-textarea,
+    .planner-saved,
+    .dash-tile-key,
+    .stat-label,
+    .footer-note,
+    .footer-links a {
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    /* Progress bar labels */
+    .progress-bar-label {
+      font-size: 0.8rem;
+    }
+
+    /* Habit dot strip label — was 0.7rem */
+    .habit-streak {
+      font-size: 0.75rem;
+    }
+
+    /* Swatch check icon — was 0.6rem */
+    .card-swatch-check,
+    .theme-check {
+      font-size: 0.72rem;
+    }
+
+    /* Timer dots label */
+    .timer-dot {
+      /* no font-size — pure shape */
+    }
+
+    /* Quote citation */
+    .quote-body cite {
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+    /* ============================================================
+       AFFIRMATION PANEL
+    ============================================================ */
+
+    .affirmation-refresh-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.3s ease, border-color 0.2s;
+      line-height: 1;
+    }
+
+    .affirmation-refresh-btn:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .affirmation-refresh-btn:active {
+      transform: rotate(180deg) scale(0.92);
+    }
+
+    .affirmation-refresh-btn.spinning {
+      animation: affirmSpin 0.4s ease both;
+    }
+
+    @keyframes affirmSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Text fade on affirmation change */
+    @keyframes affirmFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .quote-body.refreshing blockquote,
+    .quote-body.refreshing cite {
+      animation: affirmFadeIn 0.4s ease both;
+    }
+    /* ============================================================
+       SETTINGS DRAWER
+    ============================================================ */
+
+    /* Gear button in header */
+    .settings-trigger {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .settings-trigger:hover {
+      border-color: var(--accent-light);
+      color: var(--accent);
+      background: var(--accent-faint);
+      transform: rotate(30deg);
+    }
+
+    /* Backdrop */
+    .settings-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .settings-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Drawer panel */
+    .settings-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 360px;
+      max-width: 94vw;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.18);
+      z-index: 10001;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .settings-drawer.open {
+      transform: translateX(0);
+    }
+
+    /* Header row */
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 1;
+    }
+
+    .settings-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .settings-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .settings-close:hover { background: var(--accent-faint); color: var(--accent); }
+
+    /* Sections */
+    .settings-section {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .settings-section-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Row */
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+    }
+
+    .settings-row + .settings-row {
+      border-top: 1px solid var(--border);
+    }
+
+    .settings-row-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .settings-row-label span:first-child {
+      font-size: 0.88rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .settings-row-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Select */
+    .settings-select {
+      appearance: none;
+      background: var(--surface-2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      min-width: 130px;
+      transition: border-color 0.2s;
+    }
+
+    .settings-select:focus {
+      outline: none;
+      border-color: var(--accent-light);
+    }
+
+    /* Toggle switch */
+    .settings-toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .settings-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .settings-toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 999px;
+      transition: background 0.25s ease;
+    }
+
+    .settings-toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    }
+
+    .settings-toggle input:checked + .settings-toggle-track {
+      background: var(--accent);
+    }
+
+    .settings-toggle input:checked + .settings-toggle-track::after {
+      transform: translateX(20px);
+    }
+
+    /* Action buttons */
+    .settings-btn {
+      border: none;
+      border-radius: 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 7px 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .settings-btn-soft {
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border: 1.5px solid var(--border);
+    }
+
+    .settings-btn-soft:hover {
+      border-color: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .settings-btn-danger {
+      background: var(--surface-2);
+      color: #e05c6e;
+      border: 1.5px solid rgba(224,92,110,0.25);
+    }
+
+    .settings-btn-danger:hover {
+      background: rgba(224,92,110,0.08);
+      border-color: rgba(224,92,110,0.5);
+    }
+
+    /* Confirmation prompt */
+    .settings-confirm {
+      margin: 16px 28px;
+      padding: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: none;
+    }
+
+    .settings-confirm.visible { display: block; }
+
+    .settings-confirm p {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .settings-confirm-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Toast */
+    .settings-toast {
+      margin: 0 28px 28px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: var(--accent-faint);
+      color: var(--accent-dark);
+      font-size: 0.82rem;
+      font-weight: 500;
+      border: 1px solid var(--accent-light);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+
+    .settings-toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── No-motion mode ──
+       A single rule that overrides every animation and transition
+       when [data-no-motion] is present on <html>.             */
+    [data-no-motion] *,
+    [data-no-motion] *::before,
+    [data-no-motion] *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">🌸</div>
+      <div class="logo-text"><em>Bloom</em></div>
+    </div>
+    <nav>
+      <a href="#" class="active">Home</a>
+      <a href="#todo-card">To-Do</a>
+      <a href="#timer-card">Focus</a>
+      <a href="#habit-card">Habits</a>
+      <a href="#planner-card">Planner</a>
+      <a href="#dashboard-strip">Dashboard</a>
+    </nav>
+    <button class="settings-trigger" id="settings-trigger" aria-label="Open settings" title="Settings">
+      ⚙
+    </button>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Your day,<br><span>beautifully</span><br>organized.</h1>
+      <p>A soft space to plan, focus, and grow — one gentle habit at a time. Everything you need to bloom.</p>
+      <div class="cta-group">
+        <a href="#features" class="btn btn-primary">🌷 Start Today</a>
+        <a href="#features" class="btn btn-ghost">Explore features</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Wide spanning stat -->
+      <div class="hero-stat wide">
+        <div class="progress-ring">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-bg" cx="32" cy="32" r="26" />
+            <circle class="ring-fill" id="dash-ring-fill" cx="32" cy="32" r="26" />
+          </svg>
+          <div class="ring-label" id="dash-ring-label">0%</div>
+        </div>
+        <div>
+          <div class="stat-number">Today's Progress</div>
+          <div class="stat-label" id="dash-hero-label">Loading…</div>
+        </div>
+      </div>
+
+      <div class="hero-stat">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-number" id="dash-streak-value">—</div>
+        <div class="stat-label">Best active streak</div>
+      </div>
+
+      <div class="hero-stat">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-number" id="dash-focus-value">0m</div>
+        <div class="stat-label">Focused today</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THEME SWITCHER ===== -->
+  <section class="theme-section">
+    <div class="section-header">
+      <h2 class="section-title">Choose your <span>palette</span></h2>
+      <span class="theme-current-label" id="theme-current-label"></span>
+    </div>
+
+    <div class="theme-group-label">Light palettes</div>
+    <div class="theme-switcher" role="group" aria-label="Light theme selector">
+
+      <button class="theme-btn" data-theme-switch="pink" aria-pressed="false">
+        <span class="theme-swatch swatch-pink"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Rose Pink</span>
+          <span class="theme-btn-sub">soft & romantic</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="lavender" aria-pressed="false">
+        <span class="theme-swatch swatch-lavender"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Soft Lavender</span>
+          <span class="theme-btn-sub">calm & dreamy</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="peach" aria-pressed="false">
+        <span class="theme-swatch swatch-peach"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Warm Peach</span>
+          <span class="theme-btn-sub">golden & cosy</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+    </div>
+
+    <div class="theme-group-label" style="margin-top:16px;">Dark palettes</div>
+    <div class="theme-switcher" role="group" aria-label="Dark theme selector">
+
+      <button class="theme-btn" data-theme-switch="dark-pink" aria-pressed="false">
+        <span class="theme-swatch swatch-dark-pink"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Dark Bloom</span>
+          <span class="theme-btn-sub">moody & lush</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="midnight-rose" aria-pressed="false">
+        <span class="theme-swatch swatch-midnight-rose"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Midnight Rose</span>
+          <span class="theme-btn-sub">deep & ethereal</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="plum-noir" aria-pressed="false">
+        <span class="theme-swatch swatch-plum-noir"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Plum Noir</span>
+          <span class="theme-btn-sub">velvety & rich</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="forest-dusk" aria-pressed="false">
+        <span class="theme-swatch swatch-forest-dusk"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Forest Dusk</span>
+          <span class="theme-btn-sub">earthy & serene</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="slate-mauve" aria-pressed="false">
+        <span class="theme-swatch swatch-slate-mauve"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Slate Mauve</span>
+          <span class="theme-btn-sub">misty & refined</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+      <button class="theme-btn" data-theme-switch="noir-sage" aria-pressed="false">
+        <span class="theme-swatch swatch-noir-sage"></span>
+        <span class="theme-btn-text">
+          <span class="theme-btn-name">Noir Sage</span>
+          <span class="theme-btn-sub">quiet & grounded</span>
+        </span>
+        <span class="theme-check" aria-hidden="true">✓</span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ===== FEATURE CARDS ===== -->
+  <section id="features">
+    <div class="section-header">
+      <h2 class="section-title">Everything you <span>need</span></h2>
+      <a href="#features" class="section-link">View all →</a>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- To-Do List -->
+      <div class="card" id="todo-card">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Smart To-Do List</div>
+        <div class="card-desc">Capture tasks instantly, sort by priority, and celebrate every check-off.</div>
+        <div class="card-preview">
+
+          <!-- Input row -->
+          <div class="todo-form" id="todo-form">
+            <input
+              class="todo-input"
+              id="todo-input"
+              type="text"
+              placeholder="Add a task…"
+              autocomplete="off"
+              maxlength="120"
+            />
+            <button class="todo-add-btn" id="todo-add-btn" type="button" aria-label="Add task">+</button>
+          </div>
+
+          <!-- Live task list -->
+          <ul class="todo-list" id="todo-list"></ul>
+
+        </div>
+      </div>
+
+      <!-- Pomodoro Timer -->
+      <div class="card" id="timer-card">
+        <div class="card-icon">🍅</div>
+        <div class="card-title">Focus Timer</div>
+        <div class="card-desc">Pomodoro-style intervals with gentle breaks to keep your mind fresh.</div>
+        <div class="card-preview">
+          <div class="timer-display" id="timer-display">
+            <div class="timer-time" id="timer-time">25:00</div>
+            <div class="timer-label" id="timer-label">Focus Session · Round 1 of 4</div>
+            <div class="timer-dots" id="timer-dots"></div>
+          </div>
+
+          <!-- Config selects — disabled while timer is running -->
+          <div class="timer-config" id="timer-config">
+            <label class="timer-config-field">
+              <span>Focus</span>
+              <select id="cfg-focus">
+                <option value="5">5 min</option>
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+                <option value="20">20 min</option>
+                <option value="25" selected>25 min</option>
+                <option value="30">30 min</option>
+                <option value="45">45 min</option>
+                <option value="60">60 min</option>
+              </select>
+            </label>
+            <label class="timer-config-field">
+              <span>Break</span>
+              <select id="cfg-break">
+                <option value="3">3 min</option>
+                <option value="5" selected>5 min</option>
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+              </select>
+            </label>
+            <label class="timer-config-field">
+              <span>Rounds</span>
+              <select id="cfg-rounds">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="timer-controls">
+            <button class="timer-btn timer-btn-secondary" id="timer-reset-btn" title="Reset">↺</button>
+            <button class="timer-btn timer-btn-primary"   id="timer-toggle-btn">Start</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Habit Tracker -->
+      <div class="card" id="habit-card">
+        <div class="card-icon">🌱</div>
+        <div class="card-title">Habit Tracker</div>
+        <div class="card-desc">Build rituals that stick. Check in daily and watch your streak grow.</div>
+        <div class="card-preview">
+
+          <!-- Add habit input -->
+          <div class="habit-form">
+            <input
+              class="habit-input"
+              id="habit-input"
+              type="text"
+              placeholder="Add a habit…"
+              autocomplete="off"
+              maxlength="60"
+            />
+            <button class="habit-add-btn" id="habit-add-btn" type="button" aria-label="Add habit">+</button>
+          </div>
+
+          <!-- Live habit list -->
+          <ul class="habit-list" id="habit-list"></ul>
+
+        </div>
+      </div>
+
+      <!-- Daily Planner -->
+      <div class="card" id="planner-card">
+        <div class="card-icon">📅</div>
+        <div class="card-title">Daily Planner</div>
+        <div class="card-desc">Set your intentions each morning. Reflect each evening.</div>
+        <div class="card-preview">
+
+          <!-- Mood selector -->
+          <div class="planner-mood-row">
+            <span class="planner-section-label">Today's mood</span>
+            <div class="planner-moods" id="planner-moods">
+              <button class="mood-btn" data-mood="🌸" title="Blooming">🌸</button>
+              <button class="mood-btn" data-mood="☀️" title="Sunny">☀️</button>
+              <button class="mood-btn" data-mood="🌿" title="Calm">🌿</button>
+              <button class="mood-btn" data-mood="🌧️" title="Rainy">🌧️</button>
+              <button class="mood-btn" data-mood="🔥" title="Fired up">🔥</button>
+              <button class="mood-btn" data-mood="🌙" title="Tired">🌙</button>
+            </div>
+          </div>
+
+          <!-- Morning intentions -->
+          <div class="planner-field">
+            <label class="planner-section-label" for="planner-morning">
+              ☀️ Morning intentions
+            </label>
+            <textarea
+              id="planner-morning"
+              class="planner-textarea"
+              placeholder="What do you want to focus on today? What would make today feel complete?"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- Evening reflection -->
+          <div class="planner-field">
+            <label class="planner-section-label" for="planner-evening">
+              🌙 Evening reflection
+            </label>
+            <textarea
+              id="planner-evening"
+              class="planner-textarea"
+              placeholder="What went well? What are you grateful for? What would you do differently?"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <!-- Auto-save indicator -->
+          <div class="planner-saved" id="planner-saved" aria-live="polite"></div>
+
+        </div>
+      </div>
+
+      <!-- Progress Dashboard -->
+      <div class="card" id="dashboard-card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Progress Dashboard</div>
+        <div class="card-desc">See your week at a glance. Charts, streaks, and a little celebration for your wins.</div>
+        <div class="card-preview">
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span>Tasks done today</span><span id="bar-tasks-label">0 / 0</span>
+            </div>
+            <div class="progress-bar"><div class="progress-bar-fill" id="bar-tasks-fill" style="width: 0%"></div></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span>Habits checked today</span><span id="bar-habits-label">0 / 0</span>
+            </div>
+            <div class="progress-bar"><div class="progress-bar-fill" id="bar-habits-fill" style="width: 0%"></div></div>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-label">
+              <span>Focus time today</span><span id="bar-focus-label">0m</span>
+            </div>
+            <div class="progress-bar"><div class="progress-bar-fill" id="bar-focus-fill" style="width: 0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Switcher card -->
+      <div class="card" id="theme-card">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">Theme Switcher</div>
+        <div class="card-desc">Dress your space to match your mood — nine curated palettes, one click away.</div>
+        <div class="card-preview">
+
+          <div class="card-swatch-group-label">Light</div>
+          <div class="card-theme-swatches">
+            <button class="card-swatch-btn" data-theme-switch="pink" aria-pressed="false" title="Rose Pink">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#ffd6e4,#f4739a);"></span>
+              <span class="card-swatch-label">Rose</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="lavender" aria-pressed="false" title="Soft Lavender">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#ddd6fe,#8b5cf6);"></span>
+              <span class="card-swatch-label">Lavender</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="peach" aria-pressed="false" title="Warm Peach">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#fed7aa,#f97845);"></span>
+              <span class="card-swatch-label">Peach</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+          </div>
+
+          <div class="card-swatch-group-label" style="margin-top:10px;">Dark</div>
+          <div class="card-theme-swatches">
+            <button class="card-swatch-btn" data-theme-switch="dark-pink" aria-pressed="false" title="Dark Bloom">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#6b1e3d,#1a0a11);"></span>
+              <span class="card-swatch-label">Bloom</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="midnight-rose" aria-pressed="false" title="Midnight Rose">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#2e1a3a,#e8a0bf);"></span>
+              <span class="card-swatch-label">Midnight</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="plum-noir" aria-pressed="false" title="Plum Noir">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#3b1f5e,#c084fc);"></span>
+              <span class="card-swatch-label">Plum</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="forest-dusk" aria-pressed="false" title="Forest Dusk">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#14532d,#86efac);"></span>
+              <span class="card-swatch-label">Forest</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="slate-mauve" aria-pressed="false" title="Slate Mauve">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#2d2545,#c4b5cc);"></span>
+              <span class="card-swatch-label">Slate</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+            <button class="card-swatch-btn" data-theme-switch="noir-sage" aria-pressed="false" title="Noir Sage">
+              <span class="card-swatch" style="background:linear-gradient(135deg,#1a3020,#a3b899);"></span>
+              <span class="card-swatch-label">Sage</span>
+              <span class="card-swatch-check" aria-hidden="true">✓</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== AFFIRMATION PANEL ===== -->
+  <div class="quote-strip" id="affirmation-panel">
+    <div class="quote-icon" id="affirmation-icon">🌸</div>
+    <div class="quote-body">
+      <blockquote id="affirmation-text"></blockquote>
+      <cite id="affirmation-cite"></cite>
+    </div>
+    <button class="affirmation-refresh-btn" id="affirmation-refresh-btn"
+            title="New affirmation" aria-label="Show a different affirmation">
+      ↻
+    </button>
+  </div>
+
+  <!-- ===== DASHBOARD STRIP ===== -->
+  <section id="dashboard-strip">
+    <div class="section-header">
+      <h2 class="section-title">Today at a <span>glance</span></h2>
+      <a href="#dashboard-card" class="section-link">Full dashboard →</a>
+    </div>
+    <div class="dash-strip">
+      <div class="dash-tile">
+        <div class="dash-tile-icon">✅</div>
+        <div class="dash-tile-value" id="tile-tasks">—</div>
+        <div class="dash-tile-key">Tasks done</div>
+      </div>
+      <div class="dash-tile">
+        <div class="dash-tile-icon">🔥</div>
+        <div class="dash-tile-value" id="tile-streak">—</div>
+        <div class="dash-tile-key">Best streak</div>
+      </div>
+      <div class="dash-tile">
+        <div class="dash-tile-icon">⏱️</div>
+        <div class="dash-tile-value" id="tile-focus">0m</div>
+        <div class="dash-tile-key">Focus time</div>
+      </div>
+      <div class="dash-tile">
+        <div class="dash-tile-icon">🌱</div>
+        <div class="dash-tile-value" id="tile-habits">—</div>
+        <div class="dash-tile-key">Habits checked</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-brand">Bloom</div>
+    <div class="footer-note">Made with 🌸 for your best self</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">About</a>
+      <a href="#">Feedback</a>
+    </div>
+  </footer>
+
+  <!-- ===== SETTINGS DRAWER ===== -->
+  <div class="settings-backdrop" id="settings-backdrop" aria-hidden="true"></div>
+
+  <aside class="settings-drawer" id="settings-drawer" aria-label="Settings" aria-hidden="true">
+
+    <div class="settings-header">
+      <h2 class="settings-title">Settings</h2>
+      <button class="settings-close" id="settings-close" aria-label="Close settings">✕</button>
+    </div>
+
+    <!-- Appearance -->
+    <section class="settings-section">
+      <h3 class="settings-section-title">Appearance</h3>
+
+      <div class="settings-row">
+        <div class="settings-row-label">
+          <span>Default theme</span>
+          <span class="settings-row-sub">Applied on every visit</span>
+        </div>
+        <select class="settings-select" id="settings-theme-select">
+          <optgroup label="Light">
+            <option value="pink">Rose Pink</option>
+            <option value="lavender">Soft Lavender</option>
+            <option value="peach">Warm Peach</option>
+          </optgroup>
+          <optgroup label="Dark">
+            <option value="dark-pink">Dark Bloom</option>
+            <option value="midnight-rose">Midnight Rose</option>
+            <option value="plum-noir">Plum Noir</option>
+            <option value="forest-dusk">Forest Dusk</option>
+            <option value="slate-mauve">Slate Mauve</option>
+            <option value="noir-sage">Noir Sage</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-row-label">
+          <span>Animations</span>
+          <span class="settings-row-sub">Transitions, micro-interactions, celebrations</span>
+        </div>
+        <label class="settings-toggle" aria-label="Toggle animations">
+          <input type="checkbox" id="settings-animations-toggle" checked />
+          <span class="settings-toggle-track"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Data -->
+    <section class="settings-section">
+      <h3 class="settings-section-title">Data</h3>
+
+      <div class="settings-row settings-row-action">
+        <div class="settings-row-label">
+          <span>Reset today</span>
+          <span class="settings-row-sub">Clears today's planner, habit check-ins, and focus time. Streaks and tasks are kept.</span>
+        </div>
+        <button class="settings-btn settings-btn-soft" id="settings-reset-today">Reset</button>
+      </div>
+
+      <div class="settings-row settings-row-action">
+        <div class="settings-row-label">
+          <span>Clear all data</span>
+          <span class="settings-row-sub">Permanently removes all tasks, habits, sessions, and settings.</span>
+        </div>
+        <button class="settings-btn settings-btn-danger" id="settings-clear-all">Clear</button>
+      </div>
+    </section>
+
+    <!-- Confirmation prompt (hidden by default) -->
+    <div class="settings-confirm" id="settings-confirm" aria-hidden="true">
+      <p id="settings-confirm-msg"></p>
+      <div class="settings-confirm-actions">
+        <button class="settings-btn settings-btn-soft" id="settings-confirm-cancel">Cancel</button>
+        <button class="settings-btn settings-btn-danger" id="settings-confirm-ok">Confirm</button>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="settings-toast" id="settings-toast" aria-live="polite"></div>
+
+  </aside>
+
+</div><!-- /.page -->
+
+<script>
+  // ─── Constants ────────────────────────────────────────────────
+  const STORAGE_KEY   = 'bloom-theme';
+  const DEFAULT_THEME = 'pink';
+
+  // ─── Theme metadata ───────────────────────────────────────────
+  const THEME_NAMES = {
+    'pink'          : 'Rose Pink',
+    'lavender'      : 'Soft Lavender',
+    'peach'         : 'Warm Peach',
+    'dark-pink'     : 'Dark Bloom',
+    'midnight-rose' : 'Midnight Rose',
+    'plum-noir'     : 'Plum Noir',
+    'forest-dusk'   : 'Forest Dusk',
+    'slate-mauve'   : 'Slate Mauve',
+    'noir-sage'     : 'Noir Sage',
+  };
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const htmlEl            = document.documentElement;
+  const themeCurrentLabel = document.getElementById('theme-current-label');
+
+  // Returns ALL buttons with data-theme-switch — both the section
+  // switcher and the card swatches — queried fresh each call.
+  function allThemeButtons() {
+    return document.querySelectorAll('[data-theme-switch]');
+  }
+
+  // ─── Flash overlay ────────────────────────────────────────────
+  function fireThemeFlash() {
+    const flash = document.createElement('div');
+    flash.className = 'theme-flash';
+    document.body.appendChild(flash);
+    flash.addEventListener('animationend', () => flash.remove(), { once: true });
+  }
+
+  // ─── applyTheme — pure ────────────────────────────────────────
+  function applyTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+
+    allThemeButtons().forEach(btn => {
+      const isActive = btn.dataset.themeSwitch === theme;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-pressed', String(isActive));
+    });
+
+    if (themeCurrentLabel) {
+      themeCurrentLabel.textContent = THEME_NAMES[theme] ?? theme;
+      themeCurrentLabel.classList.add('visible');
+    }
+  }
+
+  // ─── selectTheme — save + flash + apply ───────────────────────
+  function selectTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+    fireThemeFlash();
+    applyTheme(theme);
+  }
+
+  // ─── restoreTheme — on page load, no flash ────────────────────
+  function restoreTheme() {
+    const saved = localStorage.getItem(STORAGE_KEY) || DEFAULT_THEME;
+    applyTheme(saved);
+  }
+
+  // ─── Wire up ──────────────────────────────────────────────────
+  // Attach to each container that holds [data-theme-switch] buttons.
+  // Direct container listeners are reliable inside sandboxed iframes;
+  // document-level delegation can be swallowed by the iframe security
+  // context (same issue that affected the to-do form submit event).
+  function wireThemeContainer(container) {
+    if (!container) return;
+    container.addEventListener('click', e => {
+      const btn = e.target.closest('[data-theme-switch]');
+      if (btn) selectTheme(btn.dataset.themeSwitch);
+    });
+  }
+
+  // Main switcher section (two .theme-switcher divs)
+  document.querySelectorAll('.theme-switcher').forEach(wireThemeContainer);
+
+  // Card swatches (two .card-theme-swatches divs inside #theme-card)
+  document.querySelectorAll('.card-theme-swatches').forEach(wireThemeContainer);
+
+  // ─── Init ─────────────────────────────────────────────────────
+  restoreTheme();
+</script>
+
+<script>
+  /* ================================================================
+     TO-DO LIST
+     Data shape: tasks = [{ id, text, done }, …]
+     Pattern: mutate tasks → saveTasks() → renderTasks() + persist
+  ================================================================ */
+
+  // ─── Constants ────────────────────────────────────────────────
+  const TODO_KEY = 'bloom-tasks';
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const todoInput  = document.getElementById('todo-input');
+  const todoAddBtn = document.getElementById('todo-add-btn');
+  const todoList   = document.getElementById('todo-list');
+
+  // ─── State ────────────────────────────────────────────────────
+  // Load from localStorage once on startup; default to empty array.
+  let tasks = JSON.parse(localStorage.getItem(TODO_KEY) || '[]');
+
+  // ─── Persist ──────────────────────────────────────────────────
+  // Call after every mutation. Saves then re-renders — one pattern, always.
+  function saveTasks() {
+    localStorage.setItem(TODO_KEY, JSON.stringify(tasks));
+    renderTasks();
+  }
+
+  // ─── Render ───────────────────────────────────────────────────
+  // Pure: reads global `tasks`, wipes list, rebuilds from scratch.
+  // Incomplete tasks float to the top; completed tasks sink to the bottom.
+  function renderTasks() {
+    todoList.innerHTML = '';
+
+    if (tasks.length === 0) {
+      todoList.innerHTML = '<li class="todo-empty">No tasks yet — add one above ✨</li>';
+      return;
+    }
+
+    const sorted = [
+      ...tasks.filter(t => !t.done),
+      ...tasks.filter(t =>  t.done),
+    ];
+
+    sorted.forEach(task => {
+      const li = document.createElement('li');
+      li.className = 'todo-item';
+      li.innerHTML = `
+        <div class="todo-dot ${task.done ? 'done' : ''}"
+             data-id="${task.id}"
+             title="Mark ${task.done ? 'incomplete' : 'complete'}"></div>
+        <span class="todo-text ${task.done ? 'done' : ''}">${escapeHtml(task.text)}</span>
+        <button class="todo-delete-btn" data-id="${task.id}" aria-label="Delete task">×</button>
+      `;
+      todoList.appendChild(li);
+    });
+  }
+
+  // ─── Actions ──────────────────────────────────────────────────
+  function addTask(text) {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    tasks.push({ id: Date.now(), text: trimmed, done: false });
+    saveTasks();
+  }
+
+  function toggleTask(id) {
+    tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+    saveTasks();
+  }
+
+  function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
+  }
+
+  // ─── Event delegation ─────────────────────────────────────────
+  // One listener on the list handles both toggles and deletes.
+  todoList.addEventListener('click', e => {
+    const dot = e.target.closest('.todo-dot');
+    const del = e.target.closest('.todo-delete-btn');
+    if (dot) toggleTask(Number(dot.dataset.id));
+    if (del) deleteTask(Number(del.dataset.id));
+  });
+
+  // ─── Add task triggers ────────────────────────────────────────
+  // Button click
+  todoAddBtn.addEventListener('click', () => {
+    addTask(todoInput.value);
+    todoInput.value = '';
+    todoInput.focus();
+  });
+
+  // Enter key in the input field
+  todoInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      addTask(todoInput.value);
+      todoInput.value = '';
+    }
+  });
+
+  // ─── Utility: sanitise user text before injecting into innerHTML
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────
+  renderTasks();
+</script>
+
+<script>
+  /* ================================================================
+     POMODORO TIMER — refactored with configurable settings
+
+     Single config object drives all timer behaviour.
+     User choices are persisted to localStorage and restored on load.
+
+     Pattern (unchanged from before):
+       applyConfig()      — pure: syncs select elements to config
+       applyTimerState()  — pure: syncs clock, label, dots, buttons
+       saveConfig()       — persists config + calls applyConfig & resetTimer
+  ================================================================ */
+
+  // ─── Storage key ──────────────────────────────────────────────
+  const TIMER_CONFIG_KEY = 'bloom-timer-config';
+
+  // ─── Default config ───────────────────────────────────────────
+  // Single source of truth. All durations in minutes here; converted
+  // to seconds only where the countdown logic needs them.
+  const DEFAULT_CONFIG = {
+    focusMinutes : 25,
+    breakMinutes : 5,
+    totalRounds  : 4,
+  };
+
+  // ─── Load config from localStorage (or fall back to defaults) ─
+  function loadConfig() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(TIMER_CONFIG_KEY));
+      // Merge so any new keys added in future get their defaults
+      return saved ? { ...DEFAULT_CONFIG, ...saved } : { ...DEFAULT_CONFIG };
+    } catch {
+      return { ...DEFAULT_CONFIG };
+    }
+  }
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const timerTimeEl  = document.getElementById('timer-time');
+  const timerLabelEl = document.getElementById('timer-label');
+  const timerDotsEl  = document.getElementById('timer-dots');
+  const timerDisplay = document.getElementById('timer-display');
+  const timerToggle  = document.getElementById('timer-toggle-btn');
+  const timerReset   = document.getElementById('timer-reset-btn');
+  const cfgFocus     = document.getElementById('cfg-focus');
+  const cfgBreak     = document.getElementById('cfg-break');
+  const cfgRounds    = document.getElementById('cfg-rounds');
+
+  // ─── Runtime state ────────────────────────────────────────────
+  let config       = loadConfig();
+  let secondsLeft  = config.focusMinutes * 60;
+  let currentRound = 1;
+  let isRunning    = false;
+  let intervalId   = null;
+
+  // ─── Helpers ──────────────────────────────────────────────────
+  function formatTime(secs) {
+    const m = String(Math.floor(secs / 60)).padStart(2, '0');
+    const s = String(secs % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function playDoneSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.3, 0.6].forEach((delay, i) => {
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = [523, 659, 784][i]; // C5–E5–G5
+        gain.gain.setValueAtTime(0.18, ctx.currentTime + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.8);
+        osc.start(ctx.currentTime + delay);
+        osc.stop(ctx.currentTime + delay + 0.9);
+      });
+    } catch { /* silent fallback */ }
+  }
+
+  // ─── applyConfig — pure ───────────────────────────────────────
+  // Syncs the three <select> elements to whatever is in `config`.
+  // Also rebuilds the dot indicators since totalRounds may have changed.
+  function applyConfig() {
+    cfgFocus.value  = config.focusMinutes;
+    cfgBreak.value  = config.breakMinutes;
+    cfgRounds.value = config.totalRounds;
+
+    // Rebuild dots to match totalRounds
+    timerDotsEl.innerHTML = Array.from(
+      { length: config.totalRounds },
+      () => '<div class="timer-dot"></div>'
+    ).join('');
+  }
+
+  // ─── saveConfig — persist + reset ─────────────────────────────
+  // Called whenever a select changes. Persists, re-applies UI,
+  // then resets the countdown to the new focus duration.
+  function saveConfig() {
+    config = {
+      focusMinutes : Number(cfgFocus.value),
+      breakMinutes : Number(cfgBreak.value),
+      totalRounds  : Number(cfgRounds.value),
+    };
+    localStorage.setItem(TIMER_CONFIG_KEY, JSON.stringify(config));
+    applyConfig();
+    resetTimer();            // always restart when config changes
+  }
+
+  // ─── applyTimerState — pure ───────────────────────────────────
+  // Reads all runtime state + config, updates every DOM element.
+  function applyTimerState() {
+    timerTimeEl.textContent = formatTime(secondsLeft);
+    timerTimeEl.classList.toggle('running', isRunning);
+    timerLabelEl.textContent = `Focus Session · Round ${currentRound} of ${config.totalRounds}`;
+    timerToggle.textContent  = isRunning ? 'Pause' : 'Start';
+
+    // Lock selects while timer is running to prevent mid-session chaos
+    [cfgFocus, cfgBreak, cfgRounds].forEach(sel => {
+      sel.disabled = isRunning;
+    });
+
+    // Dot state: done (past), active (current), empty (future)
+    timerDotsEl.querySelectorAll('.timer-dot').forEach((dot, i) => {
+      dot.classList.remove('active', 'done');
+      if (i < currentRound - 1)   dot.classList.add('done');
+      if (i === currentRound - 1) dot.classList.add('active');
+    });
+  }
+
+  // ─── Tick ─────────────────────────────────────────────────────
+  function tick() {
+    secondsLeft -= 1;
+    if (secondsLeft <= 0) {
+      secondsLeft = 0;
+      applyTimerState();
+      completeSession();
+    } else {
+      applyTimerState();
+    }
+  }
+
+  // ─── Session complete ──────────────────────────────────────────
+  function completeSession() {
+    clearInterval(intervalId);
+    intervalId = null;
+    isRunning  = false;
+
+    timerDisplay.classList.add('finished');
+    setTimeout(() => timerDisplay.classList.remove('finished'), 2500);
+    playDoneSound();
+
+    currentRound = currentRound < config.totalRounds ? currentRound + 1 : 1;
+    secondsLeft  = config.focusMinutes * 60;
+    applyTimerState();
+  }
+
+  // ─── Controls ─────────────────────────────────────────────────
+  function toggleTimer() {
+    if (isRunning) {
+      clearInterval(intervalId);
+      intervalId = null;
+      isRunning  = false;
+    } else {
+      isRunning  = true;
+      intervalId = setInterval(() => tick(), 1000);
+    }
+    applyTimerState();
+  }
+
+  function resetTimer() {
+    clearInterval(intervalId);
+    intervalId   = null;
+    isRunning    = false;
+    currentRound = 1;
+    secondsLeft  = config.focusMinutes * 60;
+    applyTimerState();
+  }
+
+  // ─── Wire up ──────────────────────────────────────────────────
+  timerToggle.addEventListener('click', toggleTimer);
+  timerReset.addEventListener('click', resetTimer);
+
+  // Each select saves immediately on change
+  cfgFocus.addEventListener ('change', saveConfig);
+  cfgBreak.addEventListener ('change', saveConfig);
+  cfgRounds.addEventListener('change', saveConfig);
+
+  // ─── Init ─────────────────────────────────────────────────────
+  applyConfig();      // populate selects + build dots from saved config
+  applyTimerState();  // render the clock face
+</script>
+
+<script>
+  /* ================================================================
+     HABIT TRACKER
+
+     Data shape:
+       habits = [{
+         id,            — unique timestamp
+         name,          — string
+         streak,        — integer, days in a row checked
+         lastChecked,   — ISO date string "YYYY-MM-DD" | null
+       }]
+
+     Daily reset logic:
+       "checked today" = lastChecked === todayStr()
+       If lastChecked is yesterday → streak is live (don't break it)
+       If lastChecked is older    → streak resets to 0 on next check-in
+       No cron needed: the date comparison handles it lazily on render.
+
+     Pattern (same as tasks):
+       saveHabits() → persist + renderHabits()
+       renderHabits() → pure, reads state, rebuilds list
+  ================================================================ */
+
+  // ─── Constants ────────────────────────────────────────────────
+  const HABITS_KEY = 'bloom-habits';
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const habitInput   = document.getElementById('habit-input');
+  const habitAddBtn  = document.getElementById('habit-add-btn');
+  const habitList    = document.getElementById('habit-list');
+
+  // ─── State ────────────────────────────────────────────────────
+  let habits = JSON.parse(localStorage.getItem(HABITS_KEY) || '[]');
+
+  // ─── Date helpers ─────────────────────────────────────────────
+  // Returns today as "YYYY-MM-DD" — timezone-safe via local date parts.
+  function todayStr() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  // Returns yesterday's date string for streak continuity check.
+  function yesterdayStr() {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function isCheckedToday(habit) {
+    return habit.lastChecked === todayStr();
+  }
+
+  // ─── Persist ──────────────────────────────────────────────────
+  function saveHabits() {
+    localStorage.setItem(HABITS_KEY, JSON.stringify(habits));
+    renderHabits();
+  }
+
+  // ─── Render ───────────────────────────────────────────────────
+  function renderHabits() {
+    habitList.innerHTML = '';
+
+    if (habits.length === 0) {
+      habitList.innerHTML = '<li class="habit-empty">No habits yet — add one above 🌱</li>';
+      return;
+    }
+
+    habits.forEach(habit => {
+      const checked = isCheckedToday(habit);
+
+      // Dot strip: last 7 positions. Today's dot reflects live check state;
+      // prior dots light up for each day of the current streak (up to 6 back).
+      const dots = Array.from({ length: 7 }, (_, i) => {
+        if (i === 6) {
+          // Rightmost dot = today
+          return `<div class="habit-dot ${checked ? 'today' : ''}"></div>`;
+        }
+        // Positions 0–5 = 6 days ago → yesterday
+        // Light them up if streak covers that far back
+        const daysBack = 6 - i;
+        const lit = habit.streak > daysBack;
+        return `<div class="habit-dot ${lit ? 'lit' : ''}"></div>`;
+      }).join('');
+
+      const streakLabel = habit.streak > 0
+        ? `${habit.streak} day streak`
+        : 'Start today';
+      const fireClass = habit.streak >= 3 ? 'on-fire' : '';
+
+      const li = document.createElement('li');
+      li.className = 'habit-row';
+      li.innerHTML = `
+        <button class="habit-check-btn ${checked ? 'checked' : ''}"
+                data-id="${habit.id}"
+                title="${checked ? 'Uncheck' : 'Check off for today'}">
+          ${checked ? '✓' : ''}
+        </button>
+        <div class="habit-info">
+          <span class="habit-name">${escapeHabit(habit.name)}</span>
+          <div class="habit-dots">${dots}</div>
+        </div>
+        <span class="habit-streak ${fireClass}">${streakLabel}</span>
+        <button class="habit-delete-btn" data-id="${habit.id}" aria-label="Delete habit">×</button>
+      `;
+      habitList.appendChild(li);
+    });
+  }
+
+  // ─── Actions ──────────────────────────────────────────────────
+  function addHabit(name) {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    habits.push({ id: Date.now(), name: trimmed, streak: 0, lastChecked: null });
+    saveHabits();
+  }
+
+  function toggleHabit(id) {
+    habits = habits.map(h => {
+      if (h.id !== id) return h;
+
+      const today = todayStr();
+      const yesterday = yesterdayStr();
+      const checked = isCheckedToday(h);
+
+      if (checked) {
+        // Unchecking today: wind streak back by 1 (min 0)
+        return { ...h, streak: Math.max(0, h.streak - 1), lastChecked: null };
+      } else {
+        // Checking in: extend streak if last check was yesterday, else start at 1
+        const newStreak = h.lastChecked === yesterday ? h.streak + 1 : 1;
+        return { ...h, streak: newStreak, lastChecked: today };
+      }
+    });
+    saveHabits();
+  }
+
+  function deleteHabit(id) {
+    habits = habits.filter(h => h.id !== id);
+    saveHabits();
+  }
+
+  // ─── Event delegation ─────────────────────────────────────────
+  habitList.addEventListener('click', e => {
+    const checkBtn = e.target.closest('.habit-check-btn');
+    const deleteBtn = e.target.closest('.habit-delete-btn');
+    if (checkBtn) toggleHabit(Number(checkBtn.dataset.id));
+    if (deleteBtn) deleteHabit(Number(deleteBtn.dataset.id));
+  });
+
+  // ─── Add habit triggers ───────────────────────────────────────
+  habitAddBtn.addEventListener('click', () => {
+    addHabit(habitInput.value);
+    habitInput.value = '';
+    habitInput.focus();
+  });
+
+  habitInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      addHabit(habitInput.value);
+      habitInput.value = '';
+    }
+  });
+
+  // ─── Utility ──────────────────────────────────────────────────
+  function escapeHabit(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────
+  renderHabits();
+</script>
+
+<script>
+  /* ================================================================
+     DASHBOARD
+
+     Reads exclusively from localStorage — never imports variables
+     from other script blocks. This keeps it fully decoupled.
+
+     Focus time:
+       Stored as { date: "YYYY-MM-DD", seconds: N } under FOCUS_LOG_KEY.
+       The timer's tick() increments this every second while running.
+       On a new day, seconds reset to 0 automatically.
+
+     Live updates:
+       We monkey-patch the three save functions from other scripts so
+       the dashboard re-renders whenever tasks, habits, or the timer
+       change — zero polling, zero custom events needed.
+
+     Calculations:
+       Tasks    — count done:true vs total from bloom-tasks
+       Habits   — count lastChecked===today vs total from bloom-habits
+       Streak   — Math.max of all habit.streak values
+       Focus    — today's accumulated seconds from bloom-focus-log
+       Ring     — task completion % drives stroke-dashoffset
+                  offset = CIRCUMFERENCE × (1 − pct)
+                  circumference of r=26 circle = 2π×26 ≈ 163.4
+  ================================================================ */
+
+  // ─── Storage keys (read-only from other features) ─────────────
+  const DASH_TASKS_KEY  = 'bloom-tasks';
+  const DASH_HABITS_KEY = 'bloom-habits';
+  const FOCUS_LOG_KEY   = 'bloom-focus-log';
+
+  // Ring geometry — must match the SVG: r="26"
+  const RING_CIRCUMFERENCE = 2 * Math.PI * 26; // ≈ 163.4
+
+  // Focus goal for the progress bar (minutes) — treat 120m as 100%
+  const FOCUS_GOAL_MINUTES = 120;
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const dashRingFill   = document.getElementById('dash-ring-fill');
+  const dashRingLabel  = document.getElementById('dash-ring-label');
+  const dashHeroLabel  = document.getElementById('dash-hero-label');
+  const dashStreakVal   = document.getElementById('dash-streak-value');
+  const dashFocusVal   = document.getElementById('dash-focus-value');
+
+  const tileTasks      = document.getElementById('tile-tasks');
+  const tileStreak     = document.getElementById('tile-streak');
+  const tileFocus      = document.getElementById('tile-focus');
+  const tileHabits     = document.getElementById('tile-habits');
+
+  const barTasksLabel  = document.getElementById('bar-tasks-label');
+  const barTasksFill   = document.getElementById('bar-tasks-fill');
+  const barHabitsLabel = document.getElementById('bar-habits-label');
+  const barHabitsFill  = document.getElementById('bar-habits-fill');
+  const barFocusLabel  = document.getElementById('bar-focus-label');
+  const barFocusFill   = document.getElementById('bar-focus-fill');
+
+  // ─── Date helper (duplicated locally — no cross-script deps) ──
+  function dashTodayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  // ─── Focus log helpers ────────────────────────────────────────
+  // The focus log persists { date, seconds } for today only.
+  function loadFocusLog() {
+    try {
+      const log = JSON.parse(localStorage.getItem(FOCUS_LOG_KEY));
+      if (log && log.date === dashTodayStr()) return log;
+    } catch { /* fall through */ }
+    return { date: dashTodayStr(), seconds: 0 };
+  }
+
+  function saveFocusLog(log) {
+    localStorage.setItem(FOCUS_LOG_KEY, JSON.stringify(log));
+  }
+
+  // Increments focus seconds by 1. Called by timer tick hook.
+  function accumulateFocusSecond() {
+    const log = loadFocusLog();
+    log.seconds += 1;
+    saveFocusLog(log);
+    renderDashboard();
+  }
+
+  // ─── Format focus time for display ───────────────────────────
+  function formatFocusTime(totalSeconds) {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    if (h > 0) return `${h}h ${m}m`;
+    return `${m}m`;
+  }
+
+  // ─── applyRing ────────────────────────────────────────────────
+  // Pure: sets stroke-dashoffset so the ring fills to `pct` (0–1).
+  function applyRing(pct) {
+    const clamped = Math.max(0, Math.min(1, pct));
+    const offset  = RING_CIRCUMFERENCE * (1 - clamped);
+    dashRingFill.style.strokeDasharray  = RING_CIRCUMFERENCE;
+    dashRingFill.style.strokeDashoffset = offset;
+    dashRingLabel.textContent = `${Math.round(clamped * 100)}%`;
+  }
+
+  // ─── renderDashboard — pure ───────────────────────────────────
+  // Reads all three localStorage keys, computes every metric,
+  // then updates every dashboard element in one pass.
+  function renderDashboard() {
+    const today  = dashTodayStr();
+
+    // ── Tasks ──
+    const tasks    = JSON.parse(localStorage.getItem(DASH_TASKS_KEY) || '[]');
+    const taskDone = tasks.filter(t => t.done).length;
+    const taskTotal = tasks.length;
+    const taskPct  = taskTotal > 0 ? taskDone / taskTotal : 0;
+    const taskLabel = taskTotal > 0 ? `${taskDone} of ${taskTotal} tasks complete` : 'No tasks yet';
+    const encouragement = taskPct === 1 && taskTotal > 0 ? ' 🎉' : taskPct >= 0.5 ? ' ✨' : '';
+
+    // ── Habits ──
+    const habits      = JSON.parse(localStorage.getItem(DASH_HABITS_KEY) || '[]');
+    const habitDone   = habits.filter(h => h.lastChecked === today).length;
+    const habitTotal  = habits.length;
+    const habitPct    = habitTotal > 0 ? habitDone / habitTotal : 0;
+    const bestStreak  = habits.reduce((max, h) => Math.max(max, h.streak), 0);
+
+    // ── Focus ──
+    const focusLog     = loadFocusLog();
+    const focusSecs    = focusLog.seconds;
+    const focusMins    = Math.floor(focusSecs / 60);
+    const focusPct     = Math.min(1, focusMins / FOCUS_GOAL_MINUTES);
+    const focusDisplay = formatFocusTime(focusSecs);
+
+    // ── Hero ring + label ──
+    applyRing(taskPct);
+    dashHeroLabel.textContent = taskLabel + encouragement;
+
+    // ── Hero small stats ──
+    dashStreakVal.textContent = bestStreak > 0 ? `${bestStreak} 🔥` : '—';
+    dashFocusVal.textContent  = focusDisplay;
+
+    // ── Dash tiles ──
+    tileTasks.textContent  = taskTotal > 0 ? `${taskDone}/${taskTotal}` : '—';
+    tileStreak.textContent = bestStreak > 0 ? bestStreak : '—';
+    tileFocus.textContent  = focusDisplay;
+    tileHabits.textContent = habitTotal > 0 ? `${habitDone}/${habitTotal}` : '—';
+
+    // ── Dashboard card progress bars ──
+    barTasksLabel.textContent  = `${taskDone} / ${taskTotal}`;
+    barTasksFill.style.width   = `${Math.round(taskPct * 100)}%`;
+
+    barHabitsLabel.textContent = `${habitDone} / ${habitTotal}`;
+    barHabitsFill.style.width  = `${Math.round(habitPct * 100)}%`;
+
+    barFocusLabel.textContent  = focusDisplay;
+    barFocusFill.style.width   = `${Math.round(focusPct * 100)}%`;
+  }
+
+  // ─── Hook into other features ─────────────────────────────────
+  // We wrap the save functions that other scripts expose globally.
+  // Each wrapped version calls the original, then refreshes the dashboard.
+  // This is safe because all three scripts have already run by now.
+
+  // Tasks — wrap saveTasks
+  const _saveTasks = saveTasks;
+  window.saveTasks = function() { _saveTasks(); renderDashboard(); };
+
+  // Habits — wrap saveHabits
+  const _saveHabits = saveHabits;
+  window.saveHabits = function() { _saveHabits(); renderDashboard(); };
+
+  // Timer — wrap tick to accumulate focus seconds each second
+  const _tick = tick;
+  window.tick = function() { _tick(); accumulateFocusSecond(); };
+
+  // ─── Init ─────────────────────────────────────────────────────
+  renderDashboard();
+</script>
+
+<script>
+  /* ================================================================
+     MICRO-INTERACTIONS — JS layer
+
+     bloomBurst(x, y)  — spawns a petal burst centred on (x, y).
+                          Called by the pomodoro and habit hooks below.
+     Petals are emoji chosen to stay on-brand: soft florals only.
+     The burst element self-removes after the longest animation ends.
+  ================================================================ */
+
+  const PETALS  = ['🌸', '✨', '🌷', '💮', '🩷', '🌺', '⭐'];
+  const COUNT   = 14;   // petals per burst
+  const MAX_R   = 130;  // max radius in px
+
+  function bloomBurst(originX, originY) {
+    const wrap = document.createElement('div');
+    wrap.className = 'bloom-burst';
+    document.body.appendChild(wrap);
+
+    for (let i = 0; i < COUNT; i++) {
+      const petal = document.createElement('span');
+      petal.className = 'bloom-petal';
+      petal.textContent = PETALS[i % PETALS.length];
+
+      // Random angle and distance for each petal
+      const angle  = (i / COUNT) * 360 + (Math.random() - 0.5) * 30;
+      const radius = MAX_R * (0.5 + Math.random() * 0.5);
+      const rad    = (angle * Math.PI) / 180;
+      const tx     = Math.round(Math.cos(rad) * radius);
+      const ty     = Math.round(Math.sin(rad) * radius);
+      const rot    = (Math.random() - 0.5) * 540;
+      const dur    = 0.7 + Math.random() * 0.5;
+      const ease   = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+      // Position at origin (centre of the triggering element)
+      petal.style.cssText = `
+        left: ${originX}px;
+        top:  ${originY}px;
+        --tx:   ${tx}px;
+        --ty:   ${ty}px;
+        --rot:  ${rot}deg;
+        --dur:  ${dur.toFixed(2)}s;
+        --ease: ${ease};
+      `;
+      wrap.appendChild(petal);
+    }
+
+    // Self-clean after the slowest petal finishes
+    setTimeout(() => wrap.remove(), 1400);
+  }
+
+  // Convenience: burst from the centre of a DOM element
+  function burstFrom(el) {
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    bloomBurst(r.left + r.width / 2, r.top + r.height / 2);
+  }
+
+  /* ── Hook 1: Pomodoro completion ─────────────────────────────
+     Wrap completeSession so a burst fires from the timer card
+     each time a focus session finishes.                          */
+  const _completeSession = completeSession;
+  window.completeSession = function () {
+    _completeSession();
+    burstFrom(document.getElementById('timer-card'));
+  };
+
+  // Make setInterval pick up the wrapped completeSession.
+  // tick() already calls completeSession() by name (not by reference),
+  // so the wrapped version is used automatically — no extra work needed.
+
+  /* ── Hook 2: Habit streak increase ───────────────────────────
+     Wrap toggleHabit. After the call, compare streaks before and
+     after — if any habit's streak went up, burst from its row.   */
+  const _toggleHabit = toggleHabit;
+  window.toggleHabit = function (id) {
+    // Snapshot streaks before the toggle
+    const before = JSON.parse(localStorage.getItem('bloom-habits') || '[]')
+      .find(h => h.id === id)?.streak ?? 0;
+
+    _toggleHabit(id);
+
+    // Check streak after (habits array is updated + saved by now)
+    const after = JSON.parse(localStorage.getItem('bloom-habits') || '[]')
+      .find(h => h.id === id)?.streak ?? 0;
+
+    if (after > before) {
+      // Find the rendered row by data-id on the check button
+      const btn = document.querySelector(`.habit-check-btn[data-id="${id}"]`);
+      burstFrom(btn || document.getElementById('habit-card'));
+    }
+  };
+</script>
+
+<script>
+  /* ================================================================
+     DAILY PLANNER
+
+     Data shape (one object, keyed by date):
+       { date: "YYYY-MM-DD", morning: "", evening: "", mood: "" }
+
+     Date-based reset:
+       On every load, we read the stored object and compare its `date`
+       field to today's date string. If they match, we restore the
+       content. If they differ (i.e. a new day), we discard the old
+       data and start fresh — no cron job, no midnight timer needed.
+       The same pattern is used by the focus log and habit lastChecked.
+
+     Auto-save:
+       Each textarea fires on 'input'. A 600ms debounce prevents
+       writing to localStorage on every keystroke; it waits until the
+       user pauses, then calls savePlanner(). Mood saves immediately
+       on click (no debounce needed — it's a single value, not text).
+  ================================================================ */
+
+  // ─── Constants ────────────────────────────────────────────────
+  const PLANNER_KEY     = 'bloom-planner';
+  const DEBOUNCE_MS     = 600;
+  const SAVED_FLASH_MS  = 1800;
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const plannerMorning  = document.getElementById('planner-morning');
+  const plannerEvening  = document.getElementById('planner-evening');
+  const plannerMoods    = document.getElementById('planner-moods');
+  const plannerSaved    = document.getElementById('planner-saved');
+  const moodBtns        = plannerMoods.querySelectorAll('.mood-btn');
+
+  // ─── State ────────────────────────────────────────────────────
+  let plannerData = { date: '', morning: '', evening: '', mood: '' };
+  let debounceTimer = null;
+
+  // ─── Date helper (local — no cross-script dependency) ─────────
+  function plannerTodayStr() {
+    const d = new Date();
+    return [
+      d.getFullYear(),
+      String(d.getMonth() + 1).padStart(2, '0'),
+      String(d.getDate()).padStart(2, '0'),
+    ].join('-');
+  }
+
+  // ─── Load ─────────────────────────────────────────────────────
+  // Reads localStorage. If the stored date matches today, restores
+  // the entry. Otherwise returns a blank record for today.
+  function loadPlanner() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(PLANNER_KEY));
+      if (stored && stored.date === plannerTodayStr()) return stored;
+    } catch { /* fall through */ }
+    return { date: plannerTodayStr(), morning: '', evening: '', mood: '' };
+  }
+
+  // ─── Persist ──────────────────────────────────────────────────
+  function savePlanner() {
+    plannerData.date = plannerTodayStr();   // always stamp with today
+    localStorage.setItem(PLANNER_KEY, JSON.stringify(plannerData));
+    flashSaved();
+  }
+
+  // ─── Render ───────────────────────────────────────────────────
+  // Pure: reads plannerData, populates every UI element.
+  function applyPlannerState() {
+    plannerMorning.value = plannerData.morning;
+    plannerEvening.value = plannerData.evening;
+    applyMoodSelection(plannerData.mood);
+  }
+
+  function applyMoodSelection(mood) {
+    moodBtns.forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.mood === mood);
+    });
+  }
+
+  // ─── Saved flash ──────────────────────────────────────────────
+  function flashSaved() {
+    plannerSaved.textContent = '✓ Saved';
+    plannerSaved.classList.add('visible');
+    clearTimeout(plannerSaved._hideTimer);
+    plannerSaved._hideTimer = setTimeout(() => {
+      plannerSaved.classList.remove('visible');
+    }, SAVED_FLASH_MS);
+  }
+
+  // ─── Debounce helper ──────────────────────────────────────────
+  // Waits DEBOUNCE_MS after the last keystroke before saving.
+  function debouncedSave() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(savePlanner, DEBOUNCE_MS);
+  }
+
+  // ─── Event listeners ──────────────────────────────────────────
+
+  // Textareas: update state on every keystroke, save after pause
+  plannerMorning.addEventListener('input', () => {
+    plannerData.morning = plannerMorning.value;
+    debouncedSave();
+  });
+
+  plannerEvening.addEventListener('input', () => {
+    plannerData.evening = plannerEvening.value;
+    debouncedSave();
+  });
+
+  // Mood buttons: save immediately on click
+  plannerMoods.addEventListener('click', e => {
+    const btn = e.target.closest('.mood-btn');
+    if (!btn) return;
+
+    // Toggle off if clicking the already-selected mood
+    const clicked = btn.dataset.mood;
+    plannerData.mood = plannerData.mood === clicked ? '' : clicked;
+    applyMoodSelection(plannerData.mood);
+    savePlanner();
+  });
+
+  // ─── Init ─────────────────────────────────────────────────────
+  plannerData = loadPlanner();
+  applyPlannerState();
+</script>
+
+<script>
+  /* ================================================================
+     DAILY AFFIRMATIONS
+
+     Data flow:
+       1. On load, read bloom-affirmation: { date, index } from localStorage.
+       2. If date === today  → restore saved index (same affirmation all day).
+          If date !== today  → derive a new index from the date string
+            so the same calendar day always maps to the same affirmation
+            across reloads and devices (deterministic seed).
+       3. The refresh button cycles to index+1, saves the new index
+            with today's date, and re-renders with a fade animation.
+
+     The affirmation list is self-contained — no network calls.
+  ================================================================ */
+
+  const AFFIRMATION_KEY = 'bloom-affirmation';
+
+  const AFFIRMATIONS = [
+    { text: "She remembered who she was, and the game changed.",         author: "Lalah Delia"         },
+    { text: "You are allowed to be both a masterpiece and a work in progress simultaneously.", author: "Sophia Bush" },
+    { text: "Inhale confidence. Exhale doubt.",                          author: "Daily Bloom"         },
+    { text: "Your only limit is the one you set yourself.",              author: "Daily Bloom"         },
+    { text: "You are worthy of the love you keep trying to give to everyone else.", author: "Daily Bloom" },
+    { text: "Growth is uncomfortable because you've never been here before.", author: "Daily Bloom"   },
+    { text: "Be the energy you want to attract.",                        author: "Daily Bloom"         },
+    { text: "Do something today that your future self will thank you for.", author: "Sean Patrick Flanery" },
+    { text: "With the new day comes new strength and new thoughts.",     author: "Eleanor Roosevelt"   },
+    { text: "Believe you can and you're halfway there.",                 author: "Theodore Roosevelt"  },
+    { text: "You are braver than you believe, stronger than you seem, and smarter than you think.", author: "A.A. Milne" },
+    { text: "Act as if what you do makes a difference. It does.",        author: "William James"       },
+    { text: "Happiness is not something readymade. It comes from your own actions.", author: "Dalai Lama" },
+    { text: "The secret of getting ahead is getting started.",           author: "Mark Twain"          },
+    { text: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+    { text: "Nothing is impossible — the word itself says 'I'm possible!'", author: "Audrey Hepburn"   },
+    { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney"        },
+    { text: "It always seems impossible until it's done.",               author: "Nelson Mandela"      },
+    { text: "Don't watch the clock; do what it does — keep going.",      author: "Sam Levenson"        },
+    { text: "Keep your face always toward the sunshine, and shadows will fall behind you.", author: "Walt Whitman" },
+    { text: "You have been assigned this mountain to show others it can be moved.", author: "Daily Bloom" },
+    { text: "Be yourself — everyone else is already taken.",             author: "Oscar Wilde"         },
+    { text: "In the middle of every difficulty lies opportunity.",       author: "Albert Einstein"     },
+    { text: "Life is what happens when you're busy making other plans.", author: "John Lennon"         },
+    { text: "Spread love everywhere you go. Let no one ever come to you without leaving happier.", author: "Mother Teresa" },
+    { text: "When you reach the end of your rope, tie a knot in it and hang on.", author: "Franklin D. Roosevelt" },
+    { text: "You are enough, exactly as you are.",                       author: "Daily Bloom"         },
+    { text: "Rest if you must, but don't you quit.",                     author: "Edgar A. Guest"      },
+    { text: "Soft is strong. Gentle is powerful. You are both.",         author: "Daily Bloom"         },
+    { text: "Today is a good day to have a good day.",                   author: "Daily Bloom"         },
+  ];
+
+  // Emoji icons that pair with affirmations (cycles in sync)
+  const ICONS = ['🌸', '✨', '🌷', '💮', '🌿', '🩷', '🌺', '⭐', '🌙', '🦋'];
+
+  // ─── Elements ─────────────────────────────────────────────────
+  const affirmText   = document.getElementById('affirmation-text');
+  const affirmCite   = document.getElementById('affirmation-cite');
+  const affirmIcon   = document.getElementById('affirmation-icon');
+  const affirmPanel  = document.querySelector('.quote-body');
+  const refreshBtn   = document.getElementById('affirmation-refresh-btn');
+
+  // ─── Date helper ──────────────────────────────────────────────
+  function affirmTodayStr() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  // ─── Date seed — same date always → same starting affirmation ─
+  // Sum the char codes of the date string for a stable numeric seed.
+  function dateSeed(dateStr) {
+    return dateStr.split('').reduce((sum, c) => sum + c.charCodeAt(0), 0);
+  }
+
+  // ─── Load ─────────────────────────────────────────────────────
+  function loadAffirmation() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(AFFIRMATION_KEY));
+      if (saved && saved.date === affirmTodayStr()) return saved.index;
+    } catch { /* fall through */ }
+    // New day — derive index from date so it's deterministic
+    return dateSeed(affirmTodayStr()) % AFFIRMATIONS.length;
+  }
+
+  // ─── Save ─────────────────────────────────────────────────────
+  function saveAffirmation(index) {
+    localStorage.setItem(AFFIRMATION_KEY, JSON.stringify({
+      date : affirmTodayStr(),
+      index,
+    }));
+  }
+
+  // ─── Render ───────────────────────────────────────────────────
+  function renderAffirmation(index, animate) {
+    const { text, author } = AFFIRMATIONS[index];
+
+    if (animate) {
+      affirmPanel.classList.remove('refreshing');
+      // Force reflow so the animation restarts cleanly
+      void affirmPanel.offsetWidth;
+      affirmPanel.classList.add('refreshing');
+    }
+
+    affirmText.textContent = `"${text}"`;
+    affirmCite.textContent = `— ${author} · Today's affirmation`;
+    affirmIcon.textContent  = ICONS[index % ICONS.length];
+  }
+
+  // ─── State ────────────────────────────────────────────────────
+  let currentIndex = loadAffirmation();
+
+  // ─── Refresh button ───────────────────────────────────────────
+  refreshBtn.addEventListener('click', () => {
+    // Advance to next affirmation, wrap around
+    currentIndex = (currentIndex + 1) % AFFIRMATIONS.length;
+    saveAffirmation(currentIndex);
+    renderAffirmation(currentIndex, true);
+
+    // Spin the button once
+    refreshBtn.classList.remove('spinning');
+    void refreshBtn.offsetWidth;
+    refreshBtn.classList.add('spinning');
+    refreshBtn.addEventListener('animationend', () => {
+      refreshBtn.classList.remove('spinning');
+    }, { once: true });
+  });
+
+  // ─── Init ─────────────────────────────────────────────────────
+  saveAffirmation(currentIndex);   // stamp with today's date
+  renderAffirmation(currentIndex, false);
+</script>
+
+<script>
+  /* ================================================================
+     SETTINGS PANEL
+
+     Persists: bloom-settings = { animationsOn, defaultTheme }
+
+     Animations off → adds [data-no-motion] to <html>. A single CSS
+       rule sets all durations to 1ms — no animation code is touched.
+     Default theme  → stored here, separate from the live theme key,
+       so free mid-session switching doesn't corrupt the saved default.
+     Reset today    → zeroes bloom-focus-log, strips lastChecked from
+       each habit (streaks and task list untouched), wipes bloom-planner
+       for today. Calls existing renderHabits/renderDashboard.
+     Clear all      → localStorage.clear() + location.reload().
+  ================================================================ */
+
+  const SETTINGS_KEY = 'bloom-settings';
+  const SETTINGS_DEFAULT = { animationsOn: true, defaultTheme: 'pink' };
+
+  // ── Storage ────────────────────────────────────────────────────
+  function loadSettings() {
+    try {
+      const s = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+      return s ? { ...SETTINGS_DEFAULT, ...s } : { ...SETTINGS_DEFAULT };
+    } catch { return { ...SETTINGS_DEFAULT }; }
+  }
+
+  function saveSettings(s) {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+  }
+
+  // ── Elements ───────────────────────────────────────────────────
+  const elTrigger     = document.getElementById('settings-trigger');
+  const elDrawer      = document.getElementById('settings-drawer');
+  const elBackdrop    = document.getElementById('settings-backdrop');
+  const elClose       = document.getElementById('settings-close');
+  const elThemeSel    = document.getElementById('settings-theme-select');
+  const elAnimToggle  = document.getElementById('settings-animations-toggle');
+  const elResetToday  = document.getElementById('settings-reset-today');
+  const elClearAll    = document.getElementById('settings-clear-all');
+  const elConfirm     = document.getElementById('settings-confirm');
+  const elConfirmMsg  = document.getElementById('settings-confirm-msg');
+  const elConfirmOk   = document.getElementById('settings-confirm-ok');
+  const elConfirmCancel = document.getElementById('settings-confirm-cancel');
+  const elToast       = document.getElementById('settings-toast');
+
+  let appSettings  = loadSettings();
+  let pendingAction = null;
+  let toastTimer   = null;
+
+  // ── Drawer open / close ────────────────────────────────────────
+  function openSettingsDrawer() {
+    syncSettingsUI();
+    elDrawer.classList.add('open');
+    elBackdrop.classList.add('open');
+    elDrawer.setAttribute('aria-hidden', 'false');
+    elBackdrop.setAttribute('aria-hidden', 'false');
+    elTrigger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeSettingsDrawer() {
+    elDrawer.classList.remove('open');
+    elBackdrop.classList.remove('open');
+    elDrawer.setAttribute('aria-hidden', 'true');
+    elBackdrop.setAttribute('aria-hidden', 'true');
+    elTrigger.setAttribute('aria-expanded', 'false');
+    hideConfirm();
+  }
+
+  // ── Sync controls → appSettings ───────────────────────────────
+  function syncSettingsUI() {
+    elThemeSel.value     = appSettings.defaultTheme;
+    elAnimToggle.checked = appSettings.animationsOn;
+  }
+
+  // ── Motion ────────────────────────────────────────────────────
+  function applyMotion(on) {
+    if (on) document.documentElement.removeAttribute('data-no-motion');
+    else    document.documentElement.setAttribute('data-no-motion', '');
+  }
+
+  // ── Toast ─────────────────────────────────────────────────────
+  function showToast(msg) {
+    elToast.textContent = msg;
+    elToast.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => elToast.classList.remove('visible'), 2600);
+  }
+
+  // ── Confirm prompt ────────────────────────────────────────────
+  function showConfirm(msg, action) {
+    elConfirmMsg.textContent = msg;
+    pendingAction = action;
+    elConfirm.classList.add('visible');
+    elConfirm.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideConfirm() {
+    elConfirm.classList.remove('visible');
+    elConfirm.setAttribute('aria-hidden', 'true');
+    pendingAction = null;
+  }
+
+  // ── Reset today ───────────────────────────────────────────────
+  function doResetToday() {
+    const today = (() => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    })();
+
+    // Focus log
+    localStorage.removeItem('bloom-focus-log');
+
+    // Habit check-ins only (streaks preserved)
+    try {
+      const habits = JSON.parse(localStorage.getItem('bloom-habits') || '[]');
+      localStorage.setItem('bloom-habits', JSON.stringify(
+        habits.map(h => h.lastChecked === today ? { ...h, lastChecked: null } : h)
+      ));
+    } catch { /**/ }
+
+    // Planner
+    try {
+      const p = JSON.parse(localStorage.getItem('bloom-planner'));
+      if (p && p.date === today) localStorage.removeItem('bloom-planner');
+    } catch { /**/ }
+
+    // Planner UI
+    const pm = document.getElementById('planner-morning');
+    const pe = document.getElementById('planner-evening');
+    if (pm) pm.value = '';
+    if (pe) pe.value = '';
+
+    // Re-render existing features using their own functions
+    if (typeof renderHabits    === 'function') renderHabits();
+    if (typeof renderDashboard === 'function') renderDashboard();
+
+    showToast("✓ Today's data has been reset");
+  }
+
+  // ── Clear all ─────────────────────────────────────────────────
+  function doClearAll() {
+    localStorage.clear();
+    location.reload();
+  }
+
+  // ── Listeners ─────────────────────────────────────────────────
+  elTrigger.addEventListener('click', openSettingsDrawer);
+  elClose.addEventListener('click', closeSettingsDrawer);
+  elBackdrop.addEventListener('click', closeSettingsDrawer);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && elDrawer.classList.contains('open'))
+      closeSettingsDrawer();
+  });
+
+  elThemeSel.addEventListener('change', () => {
+    appSettings.defaultTheme = elThemeSel.value;
+    saveSettings(appSettings);
+    if (typeof selectTheme === 'function') selectTheme(elThemeSel.value);
+    showToast(`✓ Theme set to ${elThemeSel.options[elThemeSel.selectedIndex].text}`);
+  });
+
+  elAnimToggle.addEventListener('change', () => {
+    appSettings.animationsOn = elAnimToggle.checked;
+    saveSettings(appSettings);
+    applyMotion(appSettings.animationsOn);
+    showToast(appSettings.animationsOn ? '✓ Animations enabled' : '✓ Animations disabled');
+  });
+
+  elResetToday.addEventListener('click', () => showConfirm(
+    "Clear today's habit check-ins, planner notes, and focus time? Streaks and tasks are kept.",
+    doResetToday
+  ));
+
+  elClearAll.addEventListener('click', () => showConfirm(
+    'Permanently delete all tasks, habits, sessions, planner entries, and settings? This cannot be undone.',
+    doClearAll
+  ));
+
+  elConfirmOk.addEventListener('click', () => {
+    if (typeof pendingAction === 'function') pendingAction();
+    hideConfirm();
+  });
+  elConfirmCancel.addEventListener('click', hideConfirm);
+
+  // ── Init ──────────────────────────────────────────────────────
+  applyMotion(appSettings.animationsOn);
+  syncSettingsUI();
+</script>
+
+<script>
+  /* ================================================================
+     SCROLL-SPY — nav active state
+
+     An IntersectionObserver watches all target elements; whichever
+     is most visible in the viewport drives the active highlight.
+     No layout or styling changes — only .active class toggling.
+  ================================================================ */
+
+  const NAV_TARGETS = [
+    { link: 'a[href="#todo-card"]',        target: '#todo-card'        },
+    { link: 'a[href="#timer-card"]',       target: '#timer-card'       },
+    { link: 'a[href="#habit-card"]',       target: '#habit-card'       },
+    { link: 'a[href="#planner-card"]',     target: '#planner-card'     },
+    { link: 'a[href="#dashboard-strip"]',  target: '#dashboard-strip'  },
+  ];
+
+  const navLinks = document.querySelectorAll('nav a');
+
+  // Track which sections are currently intersecting and by how much
+  const visibilityMap = new Map();
+
+  function setActiveNav(id) {
+    navLinks.forEach(a => {
+      const href = a.getAttribute('href');
+      // "Home" link is active when nothing else is
+      a.classList.toggle('active',
+        id === null ? href === '#' : href === id
+      );
+    });
+  }
+
+  function pickMostVisible() {
+    let best = null;
+    let bestRatio = 0;
+    visibilityMap.forEach((ratio, id) => {
+      if (ratio > bestRatio) { bestRatio = ratio; best = id; }
+    });
+    setActiveNav(bestRatio > 0.05 ? best : null);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      visibilityMap.set('#' + e.target.id, e.intersectionRatio);
+    });
+    pickMostVisible();
+  }, { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] });
+
+  NAV_TARGETS.forEach(({ target }) => {
+    const el = document.querySelector(target);
+    if (el) observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
